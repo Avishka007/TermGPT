@@ -16,7 +16,8 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 DEBUG = False
 logging.basicConfig(level=logging.WARNING)
-message_history = TERMINAL_COMMANDS
+# make a copy of the default terminal prompts so we don't mutate the original
+message_history = TERMINAL_COMMANDS.copy()
 READ_RE_PATTERN = r"--r \[(.*?)\]"
 WEB_RE_PATTERN = r"--w \[(.*?)\]"
 
@@ -73,7 +74,8 @@ while True:
     init_input = input(colorama.Fore.GREEN + colorama.Style.BRIGHT + "Command: " + colorama.Style.RESET_ALL)
 
     if init_input.lower() == "clear"  or init_input.lower() == "--c":
-        message_history = TERMINAL_COMMANDS
+        # reset to a fresh copy of the default commands
+        message_history = TERMINAL_COMMANDS.copy()
         command_outputs = ""
         print(colorama.Fore.YELLOW + colorama.Style.BRIGHT + "Context reset.\n\n" + colorama.Style.RESET_ALL)
         continue
